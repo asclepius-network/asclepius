@@ -111,7 +111,7 @@ decl_module! {
             let mut place = Self::place(place_id.clone());
             place.visited.push(visitor.clone());
             <Places<T>>::mutate(place_id.clone(), |p| *p = place);
-            <Visited<T>>::insert((place_id, visitor.clone()), time);
+            <Visits<T>>::insert((place_id, visitor.clone()), time);
             Self::deposit_event(RawEvent::PlaceVisited(place_id, visitor));
             Ok(())
         }
