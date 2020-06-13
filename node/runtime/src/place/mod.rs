@@ -110,6 +110,9 @@ decl_module! {
             ensure!(<Places<T>>::exists(place_id.clone()), "Place is not registered");
             let mut place = Self::place(place_id.clone());
             place.visited.push(visitor.clone());
+            let mut visitor_info = identifier::Module::<T>::id(visitor.clone());
+            visitor_info.visited.push(place_id.clone());
+            identifier::Identifiers::<T>::mutate(visitor.clone(), |v| *v = visitor_info);
             <Places<T>>::mutate(place_id.clone(), |p| *p = place);
             <Visits<T>>::insert((place_id, visitor.clone()), time);
             Self::deposit_event(RawEvent::PlaceVisited(place_id, visitor));
