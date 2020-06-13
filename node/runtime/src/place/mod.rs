@@ -84,6 +84,7 @@ decl_module! {
             Ok(())
         }
 
+        #[weight = SimpleDispatchInfo::FixedNormal(0)]
         pub fn set_infected(origin, place_id: u64) -> Result {
             let sender = ensure_signed(origin)?;
             let place: Place<T::AccountId> = Self::place(place_id.clone());
@@ -103,6 +104,7 @@ decl_module! {
             Ok(())
         }
 
+        #[weight = SimpleDispatchInfo::FixedNormal(0)]
         pub fn visit_place(origin, place_id: u64, time: T::Moment) -> Result {
             let visitor = ensure_signed(origin)?;
             ensure!(<Places<T>>::exists(place_id.clone()), "Place is not registered");
