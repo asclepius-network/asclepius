@@ -121,6 +121,6 @@ decl_event!(
         PlaceRegistered(AccountId, u64),
         PlaceSudoUpdated(u64),
         PlaceInfected(u64),
-        PlaceVisited(u64, AccountId)
+        PlaceVisited(u64, AccountId),
     }
 );
