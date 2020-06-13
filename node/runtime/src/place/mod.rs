@@ -108,7 +108,10 @@ decl_module! {
         pub fn visit_place(origin, place_id: u64, time: T::Moment) -> Result {
             let visitor = ensure_signed(origin)?;
             ensure!(<Places<T>>::exists(place_id.clone()), "Place is not registered");
-            <Visits<T>>::insert((place_id.clone(), visitor.clone()), time);
+            let mut place = Self::place(place_id.clone());
+            place.visited.push(visitor.clone());
+            <Places<T>>::mutate(place_id.clone(), |p| *p = place);
+            <Visited<T>>::insert((place_id, visitor.clone()), time);
             Self::deposit_event(RawEvent::PlaceVisited(place_id, visitor));
             Ok(())
         }
