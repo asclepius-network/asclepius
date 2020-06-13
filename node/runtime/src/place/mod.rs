@@ -106,7 +106,7 @@ decl_module! {
         pub fn visit_place(origin, place_id: u64, time: T::Moment) -> Result {
             let visitor = ensure_signed(origin)?;
             ensure!(<Places<T>>::exists(place_id.clone()), "Place is not registered");
-            <Visited<T>>::insert((place_id.clone(), visitor.clone()), time);
+            <Visits<T>>::insert((place_id.clone(), visitor.clone()), time);
             Self::deposit_event(RawEvent::PlaceVisited(place_id, visitor));
             Ok(())
         }
@@ -121,6 +121,6 @@ decl_event!(
         PlaceRegistered(AccountId, u64),
         PlaceSudoUpdated(u64),
         PlaceInfected(u64),
-        PlaceVisited(u64, AccoountId)
+        PlaceVisited(u64, AccountId)
     }
 );
